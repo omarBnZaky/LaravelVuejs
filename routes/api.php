@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 //Route::apiResources(['user'=>'API\UserController']);
-
+//
 //Route::apiResources(['role'=>'API\RolesController']);
 //Route::apiResources(['org/users'=>'API\Organization\UserController']);
 //Route::group(['prefix'=>'org','namespace'=>''])

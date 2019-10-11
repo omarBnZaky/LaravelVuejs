@@ -13,7 +13,10 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
+    .sourceMaps()
     .version();
+
+// mix.browserSync('admin.laravelvue.test');
 
 mix.js('resources/js/admin.js','public/js')
     .extract(['vue'])

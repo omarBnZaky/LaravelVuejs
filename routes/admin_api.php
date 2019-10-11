@@ -1,5 +1,6 @@
 <?php
-Route::domain('admin.laravelvue.test')->group(function () {
-    Route::apiResources(['/user'=>'API\UserController']);
-    Route::apiResources(['/role'=>'API\RolesController']);
-});
+use Illuminate\Http\Request;
+
+Route::apiResources(['user'=>'API\UserController']);
+
+Route::apiResources(['role'=>'API\RolesController']);

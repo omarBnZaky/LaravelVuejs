@@ -22,7 +22,7 @@ class RolesController extends Controller
     public function index()
     {
         $roles = $this->role->getRoles();
-        return response()->json($roles);
+        return response($roles);
     }
 
     /**

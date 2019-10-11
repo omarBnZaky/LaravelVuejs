@@ -14,14 +14,14 @@ class UserController extends Controller
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->middleware('auth:admin');
+//        $this->middleware('auth:admin');
 
     }
 
     public function index()
     {
-        $users = $this->user->all();
-        return response()->json($users);
+        $users = $this->user->paginateUsers(10);
+        return response($users);
     }
 
     public function store()
