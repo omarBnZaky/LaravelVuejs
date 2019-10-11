@@ -17,6 +17,8 @@ import VueRouter from 'vue-router';
 import { Form, HasError, AlertError } from 'vform';
 import VueProgressBar from 'vue-progressbar'
 import swal from 'sweetalert2'
+import Swal from "sweetalert2";
+window.Swal = Swal;
 window.swal = swal;
 const toast = swal.mixin({
     toast: true,

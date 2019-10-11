@@ -37,6 +37,7 @@ class UserController extends Controller
 
         try{
             $user = $this->user->createUser();
+            return ['message'=>'User Created Successfully'];
         }catch (Exception $exception){
             return response($exception->getMessage());
         }
@@ -54,7 +55,8 @@ class UserController extends Controller
 
         try{
             $user = $this->user->find($id);
-            return $this->user->updateUser($user);
+            $this->user->updateUser($user);
+            return ['message'=>'user Updated Successfully'];
         }catch (Exception $exception){
             return response($exception->getMessage());
         }

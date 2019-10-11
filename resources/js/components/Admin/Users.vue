@@ -49,7 +49,7 @@
                                     <a href="#" @click="editModal(user)">
                                         <i class="fa fa-edit"></i>
                                     </a>  /
-                                    <a href="#" @click="deleteModal(user)">
+                                    <a href="#" @click="deleteUser(user.id)">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
@@ -147,7 +147,7 @@
                             <img v-bind:src="form.profile" class="img-responsive" height="150" width="150">
                         </div>
                         <div class="col-md-3" v-else-if="editMode && !editImg">
-                            <img v-bind:src="'img/profile/' + form.profile" class="img-responsive" height="150" width="150">
+                            <img v-bind:src="'img/user/' + form.profile" class="img-responsive" height="150" width="150">
                         </div>
 
                         <div class="col-md-3" v-else-if="editMode && editImg">
@@ -172,7 +172,6 @@
 
 <script>
     import Multiselect from 'vue-multiselect'
-    import  swal from 'sweetalert2'
     export default {
         name: "Users.vue",
         components: { Multiselect },
@@ -211,8 +210,37 @@
 
             },
 
-            deleteModal(user)
+            deleteUser(id)
             {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        this.form.delete('/admin/api/user/'+id).then(()=>{
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                            Fire.$emit('AfterCreate');
+
+                    }).catch(()=>{
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Cannot delete User !',
+                        })
+                    })
+                    }
+
+                })
 
             },
             editModal(user)
@@ -266,7 +294,7 @@
                     }
                     reader.readAsDataURL(file)
                 }else{
-                    swal({
+                    Swal.fire({
                         type: "error",
                         title : "Oops!",
                         text:"you cannot upload large file",
@@ -293,7 +321,7 @@
 
                     })
                     .catch(()=>{
-                        swal({
+                        Swal.fire({
                             type: "error",
                             title : "Oops!",
                             text:"cannot create user",

@@ -173,7 +173,9 @@ class User
         try {
             $oldPicPath =public_path('img/user/').$user->profile;
 
-            unlink($oldPicPath);
+            if(file_exists($oldPicPath)){
+                unlink($oldPicPath);
+            }
 
             $user->delete();
         } catch (Exception $exception) {
