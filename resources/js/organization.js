@@ -3,6 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import Tasks from "./components/Organization/Tasks";
 
 
 require('./bootstrap');
@@ -12,10 +13,14 @@ import moment from 'moment';
 import Profile from "./components/Organization/Profile";
 import Dashboard from "./components/Organization/Dashboard";
 import Users from "./components/Organization/Users";
+import NotFound from "./components/NotFound";
 import VueRouter from 'vue-router';
 import { Form, HasError, AlertError } from 'vform';
 import VueProgressBar from 'vue-progressbar'
-import swal from 'sweetalert2'
+import swal from 'sweetalert2';
+import Swal from "sweetalert2";
+
+window.Swal = Swal;
 window.swal = swal;
 const toast = swal.mixin({
     toast: true,
@@ -34,9 +39,12 @@ Vue.use(VueRouter)
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 const routes = [
-    { path: '/dashboard', component: Dashboard },
-    { path: '/profile', component: Profile },
-    { path: '/users', component: Users },
+    { path: '/org/dashboard', component: Dashboard },
+    { path: '/org/profile', component: Profile },
+    { path: '/org/users', component: Users },
+    { path: '/org/tasks', component: Tasks },
+    { path: '*', component: NotFound}
+
 ];
 
 
@@ -100,6 +108,11 @@ Vue.component(
 Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue').default
+);
+
+Vue.component(
+    'not-found',
+    require('./components/NotFound.vue')
 );
 
 // const files = require.context('./', true, /\.vue$/i)

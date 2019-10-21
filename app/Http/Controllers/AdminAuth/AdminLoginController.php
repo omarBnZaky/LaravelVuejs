@@ -10,7 +10,7 @@ class AdminLoginController extends Controller
 {
     /**
      * Show the application’s login form.
-     *
+     *admin
      * @return \Illuminate\Http\Response
      */
     public function showLoginForm()

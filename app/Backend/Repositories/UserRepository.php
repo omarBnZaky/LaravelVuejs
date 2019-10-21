@@ -6,6 +6,7 @@ namespace App\Backend\Repositories;
 
 use App\Backend\Helper\Constant;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository
 {
@@ -47,9 +48,12 @@ class UserRepository
         return $this;
     }
 
-    public function count()
+
+    public function countUsers()
     {
-        return $this->userModel->count();
+        $this->userModel = $this->userModel->count();
+
+        return $this;
     }
 
     public function firstUser()
@@ -88,13 +92,13 @@ class UserRepository
 
     public function paginateUsers($pagination){
 
-        return $this->userModel->with('roles')->paginate($pagination);
+        return $this->userModel->with('roles')->with('org')->paginate($pagination);
     }
 
     public function paginateOrgUsers($pagination)
     {
         return $this->userModel
-            ->where('org_id', auth()->guard('organization')->id())
+            ->where('org_id', Auth::guard('organization')->user()->id)
             ->with('roles')
             ->paginate($pagination);
 

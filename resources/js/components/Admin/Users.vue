@@ -25,7 +25,9 @@
                                 <th>Email</th>
                                 <th>status</th>
                                 <th>Roles</th>
-                                <th>Rgistred at</th>
+                                <th>Organization</th>
+
+                                <th>Registered at</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -44,6 +46,7 @@
                                         <li>{{role.name | upText}}</li>
                                     </ul>
                                 </td>
+                                <td>{{user.org.name}}</td>
                                 <td>{{user.created_at | myDate}}</td>
                                 <td>
                                     <a href="#" @click="editModal(user)">
@@ -128,8 +131,26 @@
                                 <option value="2">blocked</option>
                             </select>
                             <has-error :form="form" field="status"></has-error>
-
                         </div>
+
+
+                        <div class ="form-group">
+                            <label>Organization</label>
+                            <select class="form-control"
+                                    name="org_id"
+                                    v-model="form.org_id"
+                                    :class="{'is-invalid':form.errors.has('org_id')}"
+                                    >
+                                    <option v-for="organization in allOrgs"
+                                            :key="organization.id"
+                                            :value="organization.id">
+                                        {{organization.name}}
+                                    </option>
+
+                            </select>
+                            <has-error :form="form" field="org_id"></has-error>
+                        </div>
+
                         <div class="form-group">
                                 <label>Password</label>
                                 <input v-model="form.password"
@@ -147,7 +168,7 @@
                             <img v-bind:src="form.profile" class="img-responsive" height="150" width="150">
                         </div>
                         <div class="col-md-3" v-else-if="editMode && !editImg">
-                            <img v-bind:src="'img/user/' + form.profile" class="img-responsive" height="150" width="150">
+                            <img v-bind:src="'/img/user/' + form.profile" class="img-responsive" height="150" width="150">
                         </div>
 
                         <div class="col-md-3" v-else-if="editMode && editImg">
@@ -191,11 +212,13 @@
                         {}
                     ],
                     'status' : '',
-                    'profile': ''
+                    'profile': '',
+                    'org_id': ''
 
                 }),
                 users: [],
                 allRoles:[],
+                allOrgs:[],
             }
         },
         methods: {
@@ -207,7 +230,6 @@
                 $('#createUser').modal('show');
                 $("#modalLabel").text("Add User");
                 this.editMode = false;
-
             },
 
             deleteUser(id)
@@ -222,7 +244,6 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-
                         this.form.delete('/admin/api/user/'+id).then(()=>{
                             Swal.fire(
                                 'Deleted!',
@@ -230,7 +251,6 @@
                                 'success'
                             )
                             Fire.$emit('AfterCreate');
-
                     }).catch(()=>{
                         Swal.fire({
                             type: 'error',
@@ -249,7 +269,6 @@
                 this.form.clear();
                 $('#createUser').modal('show');
                 $("#modalLabel").text("Edit User");
-
                 this.editMode = true;
                 this.form.fill(user);
             },
@@ -264,6 +283,12 @@
             {
                  axios.get('/admin/api/role').then(({data}) =>(this.allRoles = data));
                 //axios.get('api/role').forEach()
+            },
+
+            loadOrgs()
+            {
+                axios.get('/admin/api/all_orgs').then(({data}) =>(this.allOrgs = data));
+
             },
 
             loadUsers(page)
@@ -318,7 +343,7 @@
                         });
 
                         this.$Progress.finish()
-
+                        this.editImg= false;
                     })
                     .catch(()=>{
                         Swal.fire({
@@ -360,7 +385,10 @@
             }
         },
         created() {
+            this.loadOrgs();
+
             this.loadUsers();
+
             this.loadRoles();
             Fire.$on('AfterCreate',() => {
                 this.loadUsers();

@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use SMartins\PassportMultiauth\HasMultiAuthApiTokens;
 
 class Organization extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use Notifiable, HasMultiAuthApiTokens;
 
-    protected $guard = 'org';
+    protected $guard = 'organization';
 
     protected $fillable = [
         'hash_id','name','email','password','profile','status'
@@ -22,6 +23,6 @@ class Organization extends Authenticatable
 
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class,'org_id');
     }
 }

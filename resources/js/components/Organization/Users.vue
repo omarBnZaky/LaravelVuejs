@@ -236,7 +236,7 @@
 
             loadRoles()
             {
-                axios.get('api/role').then(({data}) =>(this.allRoles = data));
+                axios.get('/org/api/role').then(({data}) =>(this.allRoles = data));
                 //axios.get('api/role').forEach()
             },
 
@@ -245,7 +245,7 @@
                 if (typeof page === 'undefined') {
                     page = 1;
                 }
-                axios.get('api/org/users?page='+page).then(({data}) =>(this.users = data));
+                axios.get('/org/api/user?page='+page).then(({data}) =>(this.users = data));
             },
 
             addTag (newTag) {

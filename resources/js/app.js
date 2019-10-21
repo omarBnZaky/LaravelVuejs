@@ -11,11 +11,14 @@ window.Vue = require('vue');
 import moment from 'moment';
 import Profile from "./components/User/UserProfile";
 import Dashboard from "./components/User/UserDashboard";
+import UserTasks from "./components/User/UserTasks";
 import VueRouter from 'vue-router';
 import { Form, HasError, AlertError } from 'vform';
 import VueProgressBar from 'vue-progressbar'
 import swal from 'sweetalert2'
-window.swal = swal;
+import Swal from "sweetalert2";
+window.Swal = Swal;
+window.swal = swal;window.swal = swal;
 const toast = swal.mixin({
     toast: true,
     position: 'top-end',
@@ -35,6 +38,7 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 const routes = [
     { path: '/dashboard', component: Dashboard },
     { path: '/profile', component: Profile },
+    { path: '/tasks', component: UserTasks}
 ];
 
 

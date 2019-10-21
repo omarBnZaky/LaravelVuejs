@@ -3,6 +3,7 @@
 
 namespace App\Backend\Organization;
 
+
 use App\Backend\Helper\Constant;
 use App\Backend\Helper\Functions;
 use App\Backend\Repositories\UserRepository;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Exception;
+
 class User
 {
     private $userRepo;
@@ -65,9 +67,8 @@ class User
             'password' => Hash::make(request('password')),
             'status' => request('status'),
             'profile'=>$name,
-            'org_id'=>auth()->guard('organization')->user()->id
+            'org_id'=> auth()->guard('organization')->user()->id
         ]);
-
 
         foreach(request('roles') as $role)
         {
@@ -79,12 +80,12 @@ class User
     public function updateUser(\App\User $user)
     {
         try {
-
             $idS= [];
             $user->update([
                 'name' => request('name'),
                 'email' => request('email'),
                 'status' => request('status'),
+                'org_id'=> auth()->guard('organization')->user()->id
             ]);
 
             //Update password
@@ -102,14 +103,16 @@ class User
                 $user->roles()->sync($idS);
             }
 
-
             // Update profile image
             if(request()->input('profile'))
             {
-                $oldPicPath =public_path('img/user/').$user->profile;
+                if(!$user->profile== "profile.png")
+                {
+                    $oldPicPath =public_path('img/user/').$user->profile;
 
-                if(file_exists($oldPicPath)){
-                    unlink($oldPicPath);
+                    if(file_exists($oldPicPath)){
+                        unlink($oldPicPath);
+                    }
                 }
 
                 $image = request()->get('profile');
@@ -128,12 +131,10 @@ class User
 
     public function latestUsers(int $pagination)
     {
-        return $this->userRepo->latestUsers()->with('roles')
-           ->where('org_id',auth()->guard('organization')->id)
-           ->paginate($pagination);
+        return $this->userRepo->latestUsers()->with('roles')->paginate($pagination);
     }
 
-    public function paginateOrgUsers(int $pagination)
+    public function paginateUsers(int $pagination)
     {
         return $this->userRepo->paginateOrgUsers($pagination);
     }
@@ -152,32 +153,38 @@ class User
 //    {
 //        return$this->userRepo->getVerifiedUsers()->count();
 //    }
-//
-//    public function verify(\App\User $user)
-//    {
-//
-//        $user->update([
-//            'status' => Constant::VERIFIED
-//        ]);
-//    }
-//
-//    public function block(\App\User $user)
-//    {
-//        $user->update([
-//            'status' => Constant::BLOCKED
-//        ]);
-//    }
+
+    public function verify(\App\User $user)
+    {
+
+        $user->update([
+            'status' => Constant::VERIFIED
+        ]);
+    }
+
+    public function block(\App\User $user)
+    {
+        $user->update([
+            'status' => Constant::BLOCKED
+        ]);
+    }
 
     public function delete(\App\User $user)
     {
         try {
             $oldPicPath =public_path('img/user/').$user->profile;
 
-            unlink($oldPicPath);
+            if(file_exists($oldPicPath)){
+                unlink($oldPicPath);
+            }
 
             $user->delete();
         } catch (Exception $exception) {
             throw new Exception($exception->getMessage());
         }
+    }
+    public function all()
+    {
+        return $this->userRepo->getUser();
     }
 }

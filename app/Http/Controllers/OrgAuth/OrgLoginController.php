@@ -16,6 +16,9 @@ class OrgLoginController extends Controller
      */
     public function showLoginForm()
     {
+        if(Auth::guard('organization')->check()){
+            return redirect()->route('org.dashboard');
+        }
         return view('orgAuth.login');
     }
     protected function guard(){

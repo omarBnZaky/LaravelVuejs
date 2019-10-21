@@ -13,6 +13,8 @@ import Profile from "./components/Admin/Profile";
 import Dashboard from "./components/Admin/Dashboard";
 import Users from "./components/Admin/Users";
 import Developer from "./components/Admin/Developer";
+import NotFound from "./components/NotFound";
+import Organizations from "./components/Admin/Organizations";
 import VueRouter from 'vue-router';
 import { Form, HasError, AlertError } from 'vform';
 import VueProgressBar from 'vue-progressbar'
@@ -37,10 +39,12 @@ Vue.use(VueRouter)
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 const routes = [
-    { path: '/admin/developer', component:Developer },
+    { path: '/admin/developer', component: Developer },
     { path: '/admin/dashboard', component: Dashboard },
     { path: '/admin/profile', component: Profile },
     { path: '/admin/users', component: Users },
+    { path: '/admin/organizations', component: Organizations },
+    { path: '*', component: NotFound}
 ];
 
 
@@ -104,6 +108,11 @@ Vue.component(
 Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue').default
+);
+
+Vue.component(
+    'not-found',
+    require('./components/NotFound.vue')
 );
 
 // const files = require.context('./', true, /\.vue$/i)

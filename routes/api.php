@@ -21,3 +21,9 @@ use Illuminate\Http\Request;
 //Route::apiResources(['org/users'=>'API\Organization\UserController']);
 //Route::group(['prefix'=>'org','namespace'=>''])
 //Route::get('all-users','API\UserController@index');
+//Route::apiResources(['task'=>'API\User\TaskController']);
+Route::group(['prefix'=>'task'],function (){
+    Route::get('all','API\User\TaskController@index');
+    Route::post('finish/{id}','API\User\TaskController@finish');
+    Route::post('doing/{id}','API\User\TaskController@doing');
+});

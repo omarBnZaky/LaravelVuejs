@@ -13,9 +13,9 @@ class OrgRepository
     /**
      * UserRepository constructor.
      */
-    public function __construct(Organization $userModel)
+    public function __construct(Organization $orgsModel)
     {
-        $this->orgsModel = $userModel->newQuery();
+        $this->orgsModel = $orgsModel->newQuery();
     }
 
     public function newQuery()

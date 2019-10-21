@@ -76,9 +76,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Bootstrap 4 -->
 <script src="{{asset('/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
-<script src="{{asset('/dist/js/adminlte.min.js')}}"></script>
+<script src="{{asset('/plugins/chart.js/Chart.min.js')}}"></script>
 
+<script src="{{asset('/dist/js/adminlte.min.js')}}"></script>
 <!-- Vue files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+
 <script src="{{mix('/js/manifest.js')}}"></script>
 <script src="{{mix('/js/vendor.js')}}"></script>
 <script src="{{mix('/js/admin.js')}}"></script>

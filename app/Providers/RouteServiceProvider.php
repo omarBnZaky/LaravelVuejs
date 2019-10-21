@@ -43,6 +43,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapAdminRoutes();
 
+        $this->mapOrganizationApiRoutes();
+
         $this->mapOrganizationRoutes();
     }
 
@@ -89,6 +91,14 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/admin_api.php'));
+    }
+
+    protected function mapOrganizationApiRoutes()
+    {
+        Route::prefix('org/api')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/org_api.php'));
     }
 
     protected function mapOrganizationRoutes()

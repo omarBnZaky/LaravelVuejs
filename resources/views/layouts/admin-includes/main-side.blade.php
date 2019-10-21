@@ -54,13 +54,22 @@
                             </router-link>
                         </li>
 
+                        <li class="nav-item">
+                            <router-link to="/admin/organizations" class="nav-link">
+                                <i class="fa fa-building-o nav-icon"></i>
+                                <p>Organizations</p>
+                            </router-link>
+                        </li>
 
-                            <li class="nav-item">
-                                <router-link to="/admin/developer" class="nav-link">
-                                    <i class="fa fa-code nav-icon"></i>
-                                    <p>Developer</p>
-                                </router-link>
-                            </li>
+                        <li class="nav-item">
+                            <router-link to="/admin/developer" class="nav-link">
+                                <i class="fa fa-code nav-icon"></i>
+                                <p>Developer</p>
+                            </router-link>
+                        </li>
+
+
+
 
 
                     </ul>

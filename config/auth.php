@@ -52,8 +52,9 @@ return [
             'provider' => 'admins',
         ],
 
+
         'admin-api' => [
-            'driver' => 'passport',
+            'driver' => 'session',
             'provider' => 'admins',
         ],
 
@@ -63,7 +64,7 @@ return [
         ],
 
         'organization-api' => [
-            'driver' => 'passport',
+            'driver' => 'session',
             'provider' => 'organizations',
         ],
 
@@ -95,7 +96,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Admin::class,
         ],
-        'organizations'=>[
+        'organizations' =>[
             'driver' => 'eloquent',
             'model' => App\Organization::class,
         ]
@@ -130,6 +131,12 @@ return [
         'admins' => [
             'provider' => 'admins',
             'table' => 'admin_password_resets',
+            'expire' => 60,
+        ],
+
+        'organization' => [
+            'provider' => 'organizations',
+            'table' => 'organization_password_resets',
             'expire' => 60,
         ],
     ],

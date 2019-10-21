@@ -67,9 +67,9 @@ class User
             'email' => request('email'),
             'password' => Hash::make(request('password')),
             'status' => request('status'),
-            'profile'=>$name
+            'profile'=>$name,
+            'org_id'=> request('org_id')
         ]);
-
 
         foreach(request('roles') as $role)
         {
@@ -87,6 +87,8 @@ class User
                 'name' => request('name'),
                 'email' => request('email'),
                 'status' => request('status'),
+                'org_id'=> request('org_id')
+
             ]);
 
      //Update password
@@ -108,10 +110,12 @@ class User
             // Update profile image
             if(request()->input('profile'))
             {
-                $oldPicPath =public_path('img/user/').$user->profile;
+                if(!$user->profile== "profile.png") {
+                    $oldPicPath =public_path('img/user/').$user->profile;
 
-                if(file_exists($oldPicPath)){
-                    unlink($oldPicPath);
+                    if(file_exists($oldPicPath)){
+                        unlink($oldPicPath);
+                    }
                 }
 
                 $image = request()->get('profile');
@@ -137,21 +141,21 @@ class User
     {
         return $this->userRepo->paginateUsers($pagination);
     }
-
-    public function allPending()
-    {
-        return $this->userRepo->getPendingUsers()->count();
-    }
-
-    public function allBlocked()
-    {
-        return $this->userRepo->getBlockedUsers()->count();
-    }
-
-    public function allVerified()
-    {
-        return$this->userRepo->getVerifiedUsers()->count();
-    }
+//
+//    public function allPending()
+//    {
+//        return $this->userRepo->getPendingUsers()->count();
+//    }
+//
+//    public function allBlocked()
+//    {
+//        return $this->userRepo->getBlockedUsers()->count();
+//    }
+//
+//    public function allVerified()
+//    {
+//        return$this->userRepo->getVerifiedUsers()->count();
+//    }
 
     public function verify(\App\User $user)
     {
@@ -181,10 +185,6 @@ class User
         } catch (Exception $exception) {
             throw new Exception($exception->getMessage());
         }
-    }
-    public function all()
-    {
-        return $this->userRepo->getUser();
     }
 }
 

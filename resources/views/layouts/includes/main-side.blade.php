@@ -50,9 +50,9 @@
 
 
                             <li class="nav-item">
-                                <router-link to="/developer" class="nav-link">
-                                    <i class="fa fa-code nav-icon"></i>
-                                    <p>Developer</p>
+                                <router-link to="/tasks" class="nav-link">
+                                    <i class="fa fa-tasks nav-icon"></i>
+                                    <p>Tasks</p>
                                 </router-link>
                             </li>
 

@@ -25,13 +25,13 @@
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
 
-                        <router-link to="/dashboard" class="nav-link">
+                        <router-link to="/org/dashboard" class="nav-link">
                             <i class="nav-icon fa fa-dashboard"></i>
                             dashboard</router-link>
                 </li>
 
                 <li class="nav-item">
-                    <router-link to="/profile" class="nav-link">
+                    <router-link to="/org/profile" class="nav-link">
                         <i class="nav-icon fa fa-user"></i>
 
                         profile</router-link>
@@ -48,13 +48,18 @@
                     <ul class="nav nav-treeview">
 
                         <li class="nav-item">
-                            <router-link to="/users" class="nav-link">
+                            <router-link to="/org/users" class="nav-link">
                                 <i class="fa fa-users nav-icon"></i>
                                 <p>All users</p>
                             </router-link>
                         </li>
 
-
+                        <li class="nav-item">
+                            <router-link to="/org/tasks" class="nav-link">
+                                <i class="fa fa-tasks nav-icon"></i>
+                                <p>Tasks</p>
+                            </router-link>
+                        </li>
 
 
                     </ul>
